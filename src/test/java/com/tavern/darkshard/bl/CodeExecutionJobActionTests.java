@@ -1,6 +1,5 @@
-package com.tavern.darkshard.dal.bl;
+package com.tavern.darkshard.bl;
 
-import com.tavern.darkshard.bl.CodeExecutionJobAction;
 import com.tavern.darkshard.dal.CodeExecutionJobDao;
 import com.tavern.darkshard.model.CodeExecutionJobInput;
 import com.tavern.darkshard.model.ImmutableCodeExecutionJobInput;

@@ -2,7 +2,7 @@ package com.tavern.darkshard.dal.impl;
 
 import com.mongodb.client.MongoDatabase;
 import com.tavern.darkshard.dal.CodeExecutionJobDao;
-import com.tavern.darkshard.dal.marshal.MongoCodeExecDataMarshaller;
+import com.tavern.darkshard.marshal.MongoCodeExecDataMarshaller;
 import com.tavern.darkshard.model.CodeExecutionJobInput;
 import com.tavern.darkshard.model.CodeExecutionJobOutput;
 import com.tavern.darkshard.model.JobStatus;

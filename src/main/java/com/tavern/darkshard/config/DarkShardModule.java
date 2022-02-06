@@ -7,7 +7,7 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
 import com.tavern.darkshard.dal.CodeExecutionJobDao;
 import com.tavern.darkshard.dal.impl.MongoCodeExecutionJobDao;
-import com.tavern.darkshard.dal.marshal.MongoCodeExecDataMarshaller;
+import com.tavern.darkshard.marshal.MongoCodeExecDataMarshaller;
 import dagger.Module;
 import dagger.Provides;
 

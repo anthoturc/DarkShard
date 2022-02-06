@@ -1,4 +1,4 @@
-package com.tavern.darkshard.dal.marshal;
+package com.tavern.darkshard.marshal;
 
 import com.tavern.darkshard.model.CodeExecutionJobInput;
 import org.bson.Document;

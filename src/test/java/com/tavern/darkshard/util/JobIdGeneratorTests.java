@@ -1,6 +1,5 @@
-package com.tavern.darkshard.dal.util;
+package com.tavern.darkshard.util;
 
-import com.tavern.darkshard.util.JobIdGenerator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
