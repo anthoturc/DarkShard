@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package darkshard;
+
+option java_package = "com.tavern.darkshard";
+option java_multiple_files =  true;
+option java_outer_classname = "DarkShardProto";
+
+service DarkShard {
+  rpc SubmitCodeExecutionJob(SubmitCodeExecutionJobRequest) returns (SubmitCodeExecutionJobResponse) {}
+  rpc GetCodeExecutionJobStatus(GetCodeExecutionJobStatusRequest) returns (GetCodeExecutionJobStatusResponse) {}
+  rpc GetCodeExecutionJobOutput(GetCodeExecutionJobOutputRequest) returns (GetCodeExecutionJobOutputResponse) {}
+  rpc DeleteCodeExecutionJob(DeleteCodeExecutionJobRequest) returns (DeleteCodeExecutionJobResponse) {}
+}
+
+enum JobStatus {
+  DONE = 0;
+  IN_PROGRESS = 1;
+}
+
+enum ResultStatus {
+  PASSED = 0;
+  FAILED = 1;
+  TIMEOUT = 2;
+}
+
+message SubmitCodeExecutionJobRequest {
+  string rawProgramCode = 1;
+}
+
+message SubmitCodeExecutionJobResponse {
+  string jobId = 1;
+}
+
+message GetCodeExecutionJobStatusRequest {
+  string jobId = 1;
+}
+
+message GetCodeExecutionJobStatusResponse {
+  JobStatus status = 1;
+}
+
+message GetCodeExecutionJobOutputRequest {
+  string jobId = 1;
+}
+
+message GetCodeExecutionJobOutputResponse {
+  ResultStatus status = 1;
+  uint32 totalTestCases = 2;
+  uint32 totalPassed = 3;
+}
+
+message DeleteCodeExecutionJobRequest {
+  string jobId = 1;
+}
+
+message DeleteCodeExecutionJobResponse {}
