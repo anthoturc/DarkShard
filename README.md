@@ -60,7 +60,7 @@ $ docker container run -p 50051:50051 --rm shard # Start up the DarkShard servic
 
 ### Technology
 #### Tech used directly
-1. [Java 17](https://www.java.com/en/) (because why not, granted I am not using all the new shiny features... yet =) )
+1. [Java 11](https://www.java.com/en/)
 1. [gRPC](https://grpc.io/) (for communication, service definition, client/server code gen)
 1. [Dagger2](https://dagger.dev/) (for dependency injection)
 1. [Immutables](https://immutables.github.io/) (lots of benefits; e.g. thread safety, protection from NPEs)
