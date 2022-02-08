@@ -14,9 +14,9 @@ public class DarkShard {
     public static void main(String[] args) throws Exception {
         LOG.info("Staring darkshard server.");
 
-        DarkShardComponent component = DaggerDarkShardComponent.create();
-
-        Server server = ServerBuilder.forPort(50051)
+        final DarkShardComponent component = DaggerDarkShardComponent.create();
+        final int port = Integer.parseInt(System.getenv("PORT"));
+        final Server server = ServerBuilder.forPort(port)
                 .addService(component.darkShardServiceImpl())
                 .build();
 

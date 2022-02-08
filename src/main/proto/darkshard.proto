@@ -37,7 +37,7 @@ message GetCodeExecutionJobStatusRequest {
 }
 
 message GetCodeExecutionJobStatusResponse {
-  JobStatus status = 1;
+  JobStatus jobStatus = 1;
 }
 
 message GetCodeExecutionJobOutputRequest {
@@ -45,7 +45,7 @@ message GetCodeExecutionJobOutputRequest {
 }
 
 message GetCodeExecutionJobOutputResponse {
-  ResultStatus status = 1;
+  ResultStatus resultStatus = 1;
   uint32 totalTestCases = 2;
   uint32 totalPassed = 3;
 }

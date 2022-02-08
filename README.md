@@ -29,6 +29,8 @@ Also, I have been thinking about how the leetcode backend works. I decided to ju
 * Don't need to ensure strong consistency. 
 * Assuming that programs will not exceed 4 MB.
 * Submitted programs will timeout after 5 minutes.
+* Users can submit jobs anonymously (this may change)
+* This service needs to be secure (on the server end)
 
 ### Build
 

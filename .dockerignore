@@ -1,0 +1,6 @@
+.dockerignore
+**/*.log
+.gitignore
+.git
+Dockerfile
+

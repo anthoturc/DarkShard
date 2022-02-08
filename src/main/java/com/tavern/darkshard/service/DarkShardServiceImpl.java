@@ -7,6 +7,7 @@ import com.tavern.darkshard.GetCodeExecutionJobOutputRequest;
 import com.tavern.darkshard.GetCodeExecutionJobOutputResponse;
 import com.tavern.darkshard.GetCodeExecutionJobStatusRequest;
 import com.tavern.darkshard.GetCodeExecutionJobStatusResponse;
+import com.tavern.darkshard.ResultStatus;
 import com.tavern.darkshard.SubmitCodeExecutionJobRequest;
 import com.tavern.darkshard.SubmitCodeExecutionJobResponse;
 import com.tavern.darkshard.bl.CodeExecutionJobAction;
@@ -52,18 +53,41 @@ public class DarkShardServiceImpl extends DarkShardGrpc.DarkShardImplBase {
     public void getCodeExecutionJobStatus(GetCodeExecutionJobStatusRequest request,
                                           StreamObserver<GetCodeExecutionJobStatusResponse> responseObserver) {
 
+        final GetCodeExecutionJobStatusResponse response = GetCodeExecutionJobStatusResponse.newBuilder()
+                .setJobStatus(com.tavern.darkshard.JobStatus.DONE)
+                .build();
+        // TODO: Implement GetCodeExecutionJobStatus
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
     }
 
     @Override
     public void getCodeExecutionJobOutput(GetCodeExecutionJobOutputRequest request,
                                           StreamObserver<GetCodeExecutionJobOutputResponse> responseObserver) {
 
+        final GetCodeExecutionJobOutputResponse response = GetCodeExecutionJobOutputResponse.newBuilder()
+                .setResultStatus(com.tavern.darkshard.ResultStatus.PASSED)
+                .setTotalPassed(3)
+                .setTotalTestCases(3)
+                .build();
+
+        // TODO: Implement getCodeExecutionJobOutput
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
     }
 
     @Override
     public void deleteCodeExecutionJob(DeleteCodeExecutionJobRequest request,
                                        StreamObserver<DeleteCodeExecutionJobResponse> responseObserver) {
-        super.deleteCodeExecutionJob(request, responseObserver);
+
+        final DeleteCodeExecutionJobResponse response = DeleteCodeExecutionJobResponse.newBuilder()
+                .build();
+
+        // TODO: Implement delete code execution job
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
     }
 
 }
