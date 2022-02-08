@@ -38,6 +38,13 @@ Also, I have been thinking about how the leetcode backend works. I decided to ju
 $ mvn clean package
 ```
 
+### Build Docker image
+
+```
+$ docker build -t shard . # The Dockerfile consists of a a mutli stage build so you will have left over images
+$ docker container run -p 50051:50051 --rm shard # Start up the DarkShard service
+```
+
 ### Run the server locally
 
 ### TODOs
@@ -60,7 +67,7 @@ $ mvn clean package
 1. [JUnit5](https://junit.org/junit5/) (testing)
 1. [maven](https://maven.apache.org/) (dependency management + builds)
 1. [mongodb](https://www.mongodb.com/) (external data store)
-
+1. [Docker](https://docs.docker.com/) (to containerize the service)
 #### Tech used to help verify behavior
 1. [BloomRPC](https://github.com/bloomrpc/bloomrpc) Testing gRPC calls against the service 
    (esp while integration tests are not ready)
