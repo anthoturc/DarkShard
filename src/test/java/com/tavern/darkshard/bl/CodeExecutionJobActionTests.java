@@ -95,10 +95,10 @@ public class CodeExecutionJobActionTests {
 
     @Test
     public void WHEN_deleteCodeExecutionJob_THEN_unsupportedOperationException() {
-        Assertions.assertThrows(
-                UnsupportedOperationException.class,
-                () -> sut.deleteCodeExecutionJob(TEST_JOB_ID)
-        );
+        sut.deleteCodeExecutionJob(TEST_JOB_ID);
+
+        Mockito.verify(dao, Mockito.times(1))
+                .deleteCodeExecutionJob(TEST_JOB_ID);
     }
 
 }

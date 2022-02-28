@@ -1,7 +1,9 @@
 package com.tavern.darkshard.dal.impl;
 
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.result.DeleteResult;
 import com.tavern.darkshard.dal.CodeExecutionJobDao;
+import com.tavern.darkshard.exception.ResourceNotFoundException;
 import com.tavern.darkshard.marshal.MongoCodeExecDataMarshaller;
 import com.tavern.darkshard.model.CodeExecutionJobInput;
 import com.tavern.darkshard.model.CodeExecutionJobMetadata;
@@ -32,11 +34,6 @@ public class MongoCodeExecutionJobDao implements CodeExecutionJobDao {
     }
 
     @Override
-    public void deleteCodeExecutionJob() {
-        throw new UnsupportedOperationException("DeleteCodeExecutionJob is not available yet.");
-    }
-
-    @Override
     public Optional<CodeExecutionJobMetadata> getCodeExecutionJobMetadata(final String jobId) {
 
         final Document codeExecDoc = codeExecDb.getCollection(CODE_EXECUTION_COLLECTION_NAME)
@@ -53,5 +50,15 @@ public class MongoCodeExecutionJobDao implements CodeExecutionJobDao {
     @Override
     public Optional<CodeExecutionJobOutput> getCodeExecutionJobOutput(final String jobId) {
         throw new UnsupportedOperationException("GetCodeExecutionJobOutput is not available yet.");
+    }
+
+    @Override
+    public void deleteCodeExecutionJob(final String jobId) {
+        final DeleteResult result = codeExecDb.getCollection(CODE_EXECUTION_COLLECTION_NAME)
+                .deleteOne(marshaller.makeMongoDocPrimaryKey(jobId));
+
+        if (result.getDeletedCount() == 0) {
+            throw new ResourceNotFoundException(String.format("Code execution job (%s) does not exist", jobId));
+        }
     }
 }

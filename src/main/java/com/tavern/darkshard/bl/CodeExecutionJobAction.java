@@ -39,6 +39,6 @@ public class CodeExecutionJobAction {
     }
 
     public void deleteCodeExecutionJob(final String jobId) {
-        throw new UnsupportedOperationException("This will be implemented later");
+        this.codeExecJobDao.deleteCodeExecutionJob(jobId);
     }
 }

@@ -10,10 +10,10 @@ public interface CodeExecutionJobDao {
 
     void putCodeExecutionJob(CodeExecutionJobInput codeExecJobInput);
 
-    void deleteCodeExecutionJob();
-
     Optional<CodeExecutionJobMetadata> getCodeExecutionJobMetadata(String jobId);
 
     Optional<CodeExecutionJobOutput> getCodeExecutionJobOutput(String jobId);
+
+    void deleteCodeExecutionJob(String jobId);
 
 }
