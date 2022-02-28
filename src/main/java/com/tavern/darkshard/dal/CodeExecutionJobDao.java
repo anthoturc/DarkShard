@@ -1,8 +1,10 @@
 package com.tavern.darkshard.dal;
 
 import com.tavern.darkshard.model.CodeExecutionJobInput;
+import com.tavern.darkshard.model.CodeExecutionJobMetadata;
 import com.tavern.darkshard.model.CodeExecutionJobOutput;
-import com.tavern.darkshard.model.JobStatus;
+
+import java.util.Optional;
 
 public interface CodeExecutionJobDao {
 
@@ -10,8 +12,8 @@ public interface CodeExecutionJobDao {
 
     void deleteCodeExecutionJob();
 
-    JobStatus getCodeExecutionJobStatus();
+    Optional<CodeExecutionJobMetadata> getCodeExecutionJobMetadata(String jobId);
 
-    CodeExecutionJobOutput getCodeExecutionJobOutput();
+    Optional<CodeExecutionJobOutput> getCodeExecutionJobOutput(String jobId);
 
 }

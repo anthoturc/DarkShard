@@ -7,19 +7,23 @@ import com.tavern.darkshard.GetCodeExecutionJobOutputRequest;
 import com.tavern.darkshard.GetCodeExecutionJobOutputResponse;
 import com.tavern.darkshard.GetCodeExecutionJobStatusRequest;
 import com.tavern.darkshard.GetCodeExecutionJobStatusResponse;
-import com.tavern.darkshard.ResultStatus;
 import com.tavern.darkshard.SubmitCodeExecutionJobRequest;
 import com.tavern.darkshard.SubmitCodeExecutionJobResponse;
 import com.tavern.darkshard.bl.CodeExecutionJobAction;
 import com.tavern.darkshard.model.CodeExecutionJobInput;
+import com.tavern.darkshard.model.CodeExecutionJobOutput;
 import com.tavern.darkshard.model.ImmutableCodeExecutionJobInput;
 import com.tavern.darkshard.model.JobStatus;
 import com.tavern.darkshard.util.JobIdGenerator;
 import io.grpc.stub.StreamObserver;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.inject.Inject;
 
 public class DarkShardServiceImpl extends DarkShardGrpc.DarkShardImplBase {
+
+    private static final Logger LOG = LogManager.getLogger(DarkShardServiceImpl.class);
 
     private final CodeExecutionJobAction codeExecJobAction;
     private final JobIdGenerator jobIdGenerator;
@@ -31,10 +35,11 @@ public class DarkShardServiceImpl extends DarkShardGrpc.DarkShardImplBase {
         this.jobIdGenerator = jobIdGenerator;
     }
 
-
     @Override
-    public void submitCodeExecutionJob(SubmitCodeExecutionJobRequest request,
-                                       StreamObserver<SubmitCodeExecutionJobResponse> responseObserver) {
+    public void submitCodeExecutionJob(final SubmitCodeExecutionJobRequest request,
+                                       final StreamObserver<SubmitCodeExecutionJobResponse> responseObserver) {
+
+        LOG.info("In submit handler");
 
         final String jobId = jobIdGenerator.generateRandomJobId();
         final CodeExecutionJobInput codeExecutionJobInput = ImmutableCodeExecutionJobInput.builder()
@@ -50,42 +55,44 @@ public class DarkShardServiceImpl extends DarkShardGrpc.DarkShardImplBase {
     }
 
     @Override
-    public void getCodeExecutionJobStatus(GetCodeExecutionJobStatusRequest request,
-                                          StreamObserver<GetCodeExecutionJobStatusResponse> responseObserver) {
+    public void getCodeExecutionJobStatus(final GetCodeExecutionJobStatusRequest request,
+                                          final StreamObserver<GetCodeExecutionJobStatusResponse> responseObserver) {
+
+        JobStatus jobStatus = this.codeExecJobAction.getCodeExecutionJobStatus(request.getJobId());
 
         final GetCodeExecutionJobStatusResponse response = GetCodeExecutionJobStatusResponse.newBuilder()
-                .setJobStatus(com.tavern.darkshard.JobStatus.DONE)
+                .setJobStatus(jobStatus.toString())
                 .build();
-        // TODO: Implement GetCodeExecutionJobStatus
+
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
 
     @Override
-    public void getCodeExecutionJobOutput(GetCodeExecutionJobOutputRequest request,
-                                          StreamObserver<GetCodeExecutionJobOutputResponse> responseObserver) {
+    public void getCodeExecutionJobOutput(final GetCodeExecutionJobOutputRequest request,
+                                          final StreamObserver<GetCodeExecutionJobOutputResponse> responseObserver) {
+
+        final CodeExecutionJobOutput codeJobOutput =
+                this.codeExecJobAction.getCodeExecutionJobOutput(request.getJobId());
 
         final GetCodeExecutionJobOutputResponse response = GetCodeExecutionJobOutputResponse.newBuilder()
-                .setResultStatus(com.tavern.darkshard.ResultStatus.PASSED)
-                .setTotalPassed(3)
-                .setTotalTestCases(3)
+                .setResultStatus(codeJobOutput.status().toString())
+                .setJobOutput(codeJobOutput.output())
+                .setTime(codeJobOutput.time())
                 .build();
-
-        // TODO: Implement getCodeExecutionJobOutput
 
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
 
     @Override
-    public void deleteCodeExecutionJob(DeleteCodeExecutionJobRequest request,
-                                       StreamObserver<DeleteCodeExecutionJobResponse> responseObserver) {
+    public void deleteCodeExecutionJob(final DeleteCodeExecutionJobRequest request,
+                                       final StreamObserver<DeleteCodeExecutionJobResponse> responseObserver) {
+
+        this.codeExecJobAction.deleteCodeExecutionJob(request.getJobId());
 
         final DeleteCodeExecutionJobResponse response = DeleteCodeExecutionJobResponse.newBuilder()
                 .build();
-
-        // TODO: Implement delete code execution job
-
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }

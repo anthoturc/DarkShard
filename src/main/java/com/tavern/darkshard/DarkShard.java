@@ -2,8 +2,8 @@ package com.tavern.darkshard;
 
 import com.tavern.darkshard.config.DaggerDarkShardComponent;
 import com.tavern.darkshard.config.DarkShardComponent;
+import com.tavern.darkshard.config.DarkShardModule;
 import io.grpc.Server;
-import io.grpc.ServerBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,15 +14,15 @@ public class DarkShard {
     public static void main(String[] args) throws Exception {
         LOG.info("Staring darkshard server.");
 
-        final DarkShardComponent component = DaggerDarkShardComponent.create();
-        final int port = Integer.parseInt(System.getenv("PORT"));
-        final Server server = ServerBuilder.forPort(port)
-                .addService(component.darkShardServiceImpl())
+        final DarkShardComponent component = DaggerDarkShardComponent.builder()
+                .darkShardModule(new DarkShardModule(System.getenv("PORT")))
                 .build();
+
+        final Server server = component.darkShardServer();
 
         server.start();
 
-        LOG.info("Successfully started on port 50051.");
+        LOG.info(String.format("Successfully started on port %s.", System.getenv("PORT")));
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             LOG.info("Shutting down server.");

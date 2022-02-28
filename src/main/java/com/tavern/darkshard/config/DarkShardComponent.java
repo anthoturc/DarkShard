@@ -1,7 +1,7 @@
 package com.tavern.darkshard.config;
 
-import com.tavern.darkshard.service.DarkShardServiceImpl;
 import dagger.Component;
+import io.grpc.Server;
 
 import javax.inject.Singleton;
 
@@ -9,5 +9,6 @@ import javax.inject.Singleton;
 @Component(modules = DarkShardModule.class)
 public interface DarkShardComponent {
 
-    DarkShardServiceImpl darkShardServiceImpl();
+
+    Server darkShardServer();
 }

@@ -70,17 +70,14 @@ public class MongoCodeExecutionJobDaoTests {
 
     @Test
     public void WHEN_getCodeExecutionJob_THEN_unsupported() {
-        Assertions.assertThrows(
-                UnsupportedOperationException.class,
-                () -> sut.getCodeExecutionJobStatus()
-        );
+
     }
 
     @Test
     public void WHEN_getCodeExecutionJobOutput_THEN_unsupported() {
         Assertions.assertThrows(
                 UnsupportedOperationException.class,
-                () -> sut.getCodeExecutionJobOutput()
+                () -> sut.getCodeExecutionJobOutput("job-id")
         );
     }
 

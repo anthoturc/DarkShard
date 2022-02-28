@@ -13,17 +13,6 @@ service DarkShard {
   rpc DeleteCodeExecutionJob(DeleteCodeExecutionJobRequest) returns (DeleteCodeExecutionJobResponse) {}
 }
 
-enum JobStatus {
-  DONE = 0;
-  IN_PROGRESS = 1;
-}
-
-enum ResultStatus {
-  PASSED = 0;
-  FAILED = 1;
-  TIMEOUT = 2;
-}
-
 message SubmitCodeExecutionJobRequest {
   string rawProgramCode = 1;
 }
@@ -37,7 +26,7 @@ message GetCodeExecutionJobStatusRequest {
 }
 
 message GetCodeExecutionJobStatusResponse {
-  JobStatus jobStatus = 1;
+  string jobStatus = 1;
 }
 
 message GetCodeExecutionJobOutputRequest {
@@ -45,9 +34,9 @@ message GetCodeExecutionJobOutputRequest {
 }
 
 message GetCodeExecutionJobOutputResponse {
-  ResultStatus resultStatus = 1;
-  uint32 totalTestCases = 2;
-  uint32 totalPassed = 3;
+  string resultStatus = 1;
+  string jobOutput = 2;
+  string time = 3;
 }
 
 message DeleteCodeExecutionJobRequest {

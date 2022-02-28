@@ -1,7 +1,9 @@
 package com.tavern.darkshard.marshal;
 
 import com.tavern.darkshard.model.CodeExecutionJobInput;
+import com.tavern.darkshard.model.CodeExecutionJobMetadata;
 import com.tavern.darkshard.model.ImmutableCodeExecutionJobInput;
+import com.tavern.darkshard.model.ImmutableCodeExecutionJobMetadata;
 import com.tavern.darkshard.model.JobStatus;
 import org.bson.Document;
 import org.junit.jupiter.api.Assertions;
@@ -40,5 +42,27 @@ public class MongoCodeExecDataMarshallerTests {
                 .append(JOB_STATUS, TEST_JOB_STATUS.toString());
 
         Assertions.assertEquals(expectedDocument, sut.makeMongoDocFromCodeExecInput(testInput));
+    }
+
+    @Test
+    public void WHEN_makeMongoDocPrimaryKey_THEN_succeed() {
+        final Document expectedDocument = new Document()
+                .append(JOB_ID, TEST_JOB_ID);
+
+        Assertions.assertEquals(expectedDocument, sut.makeMongoDocPrimaryKey(TEST_JOB_ID));
+    }
+
+    @Test
+    public void WHEN_makeCodeExecutionJobMetadata_THEN_succeed() {
+        final CodeExecutionJobMetadata expectedMetadata = ImmutableCodeExecutionJobMetadata.builder()
+                .jobId(TEST_JOB_ID)
+                .status(TEST_JOB_STATUS)
+                .build();
+
+        final Document codeExecMetadataDoc = new Document()
+                .append(JOB_ID, TEST_JOB_ID)
+                .append(JOB_STATUS, TEST_JOB_STATUS.toString());
+
+        Assertions.assertEquals(expectedMetadata, sut.makeCodeExecJobMetadata(codeExecMetadataDoc));
     }
 }

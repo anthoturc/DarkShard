@@ -9,4 +9,6 @@ public interface CodeExecutionJobOutput {
 
     ResultStatus status();
 
+    String output();
+
 }
