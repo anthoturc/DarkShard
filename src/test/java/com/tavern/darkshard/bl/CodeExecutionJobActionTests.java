@@ -1,6 +1,7 @@
 package com.tavern.darkshard.bl;
 
 import com.tavern.darkshard.dal.CodeExecutionJobDao;
+import com.tavern.darkshard.dal.CodeExecutionJobQueueDao;
 import com.tavern.darkshard.exception.ResourceNotFoundException;
 import com.tavern.darkshard.exception.UnsupportedOperationException;
 import com.tavern.darkshard.model.CodeExecutionJobInput;
@@ -21,6 +22,7 @@ public class CodeExecutionJobActionTests {
     private static final String TEST_JOB_ID = "job-id";
 
 
+    private CodeExecutionJobQueueDao queueDao;
     private CodeExecutionJobDao dao;
     private CodeExecutionJobAction sut;
 
@@ -28,7 +30,8 @@ public class CodeExecutionJobActionTests {
     @BeforeEach
     public void beforeEachTest() {
         dao = Mockito.mock(CodeExecutionJobDao.class);
-        sut = new CodeExecutionJobAction(dao);
+        queueDao = Mockito.mock(CodeExecutionJobQueueDao.class);
+        sut = new CodeExecutionJobAction(dao, queueDao);
     }
 
     @AfterEach

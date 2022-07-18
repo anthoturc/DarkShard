@@ -35,17 +35,32 @@ Also, I have been thinking about how the leetcode backend works. I decided to ju
 ### Build
 
 ```
-$ mvn clean package
+$ mvn clean compile package
 ```
 
 ### Build Docker image
 
 ```
 $ docker build -t shard . # The Dockerfile consists of a a mutli stage build so you will have left over images
-$ docker container run -p 50051:50051 --rm shard # Start up the DarkShard service
 ```
 
+### Service dependencies
+MongoDB  - used for persistence
+RabbitMQ - used for distributing work
+
+**Note**: You will need to allowlist your IP address so that you can talk to the mongo cluster. This isn't great for local 
+development but it will have to do until we containerize the MongoDB portion of the app. This should be quick to do via docker-compose.
+
 ### Run the server locally
+Start up the service.
+```
+$ docker-compose up
+```
+
+Tear down the service
+```
+$ docker-compose down
+```
 
 ### TODOs
 * Implement CRUD on code exec jobs
@@ -53,21 +68,24 @@ $ docker container run -p 50051:50051 --rm shard # Start up the DarkShard servic
 * Add support for any language
 * Add task queue + workers (could be another service) with actual code execution logic
   * This is giving us some sense of async task execution
-* Add notes on how to run the server locally
-* Add Docker set up to containerize this app
-
+* Containerize MongoDB so that the app doesn't rely on the actual cluster.
+* Get metrics working + dashboarding (think Grafana) setup because why not.
+* ~~Add notes on how to run the server locally~~
+* ~~Add Docker set up to containerize this app~~
 
 
 ### Technology
 #### Tech used directly
 1. [Java 11](https://www.java.com/en/)
-1. [gRPC](https://grpc.io/) (for communication, service definition, client/server code gen)
-1. [Dagger2](https://dagger.dev/) (for dependency injection)
-1. [Immutables](https://immutables.github.io/) (lots of benefits; e.g. thread safety, protection from NPEs)
-1. [JUnit5](https://junit.org/junit5/) (testing)
-1. [maven](https://maven.apache.org/) (dependency management + builds)
-1. [mongodb](https://www.mongodb.com/) (external data store)
-1. [Docker](https://docs.docker.com/) (to containerize the service)
+2. [gRPC](https://grpc.io/) (for communication, service definition, client/server code gen)
+3. [Dagger2](https://dagger.dev/) (for dependency injection)
+4. [Immutables](https://immutables.github.io/) (lots of benefits; e.g. thread safety, protection from NPEs)
+5. [JUnit5](https://junit.org/junit5/) (testing)
+6. [maven](https://maven.apache.org/) (dependency management + builds)
+7. [mongodb](https://www.mongodb.com/) (external data store)
+8. [Docker + Docker Compose](https://docs.docker.com/) (to containerize the service)
+9. [RabbitMQ](https://www.rabbitmq.com/) (to distribute load to workers)
+
 #### Tech used to help verify behavior
 1. [BloomRPC](https://github.com/bloomrpc/bloomrpc) Testing gRPC calls against the service 
    (esp while integration tests are not ready)
